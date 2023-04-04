@@ -1,14 +1,15 @@
 #/bin/sh
 
 
+# 切换到工作目录
+cd /tmp/tmp
+
 # 检查是否有互联网连接
 if ! ping -c 1 -W 1 github.com > /dev/null; then
     echo "网络连接失败，请检查网络后重试。"
     exit 1
 fi
 
-# 切换到工作目录
-cd /tmp/tmp
 
 # 更新软件包列表
 sleep 10

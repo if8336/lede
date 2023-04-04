@@ -1,10 +1,12 @@
 #!/bin/zsh
+
+# 切换到工作目录
 cd ~/Downloads/update
 
 #路由器地址
 ROUTER_IP="10.1.1.1"
 # 软件仓库地址
-REPO_URL="https://github.com/coolsnowwolf/lede"
+REPO_URL="https://github.com/yjw8336/lede"
 # 当前日期
 CURRENT_DATE=$(date +%Y-%m-%d)
 
@@ -22,15 +24,6 @@ if ! ping -t 1 -W 1 ${ROUTER_IP} > /dev/null; then
 fi
 echo "路由器连接正常"
 
-#备份当前配置信息
-echo "正在备份当前配置信息"
-ssh root@${ROUTER_IP} "sysupgrade -b /tmp/tmp/${CURRENT_DATE}.tar.gz"
-
-#下载备份文件
-echo "正在下载备份文件"
-scp -r root@${ROUTER_IP}:/tmp/tmp/${CURRENT_DATE}.tar.gz ~/Downloads/update
-
-
 # 通过重定向获取最终的下载地址
 release_url=$(curl -s -L -o /dev/null -w '%{url_effective}' "${REPO_URL}/releases/latest")
 
@@ -46,7 +39,6 @@ echo "正在下载sha256sums -->${REPO_URL}/releases/download/${latest_release}/
 wget "${REPO_URL}/releases/download/${latest_release}/sha256sums" || exit 1
 
 
-
 # 验证固件
 checksum=$(shasum -a 256 openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz)
 orSum=$(cat sha256sums | grep openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz)
@@ -57,10 +49,16 @@ if [ "$checksum" != "$orSum" ]; then
 fi
  echo "文件校验成功"
 
+#备份当前配置信息
+echo "正在备份当前配置信息"
+ssh root@${ROUTER_IP} "sysupgrade -b /tmp/tmp/${CURRENT_DATE}.tar.gz"
+
+#下载备份文件
+echo "正在下载备份文件"
+scp -r root@${ROUTER_IP}:/tmp/tmp/${CURRENT_DATE}.tar.gz ~/Downloads/update
 
 
 exit 0
-
 
 
 # 上传固件
