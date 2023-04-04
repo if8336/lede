@@ -29,6 +29,10 @@ jobs:
         with:
           ref: master
 
+      - name: Get version
+        id: get_version
+        run: echo "VERSION=$(date +%Y%m%d)-$(git log --pretty=format:'%h' -1)" >> $GITHUB_OUTPUT
+
       - name: Space cleanup
         env:
           DEBIAN_FRONTEND: noninteractive
@@ -296,9 +300,6 @@ jobs:
       - name: Prepare artifact
         run: find ./bin/targets/ -type d -name "packages" | xargs rm -rf {}
 
-      - name: Get version
-        id: get_version
-        run: echo "VERSION=$(date +%Y%m%d)-$(git log --pretty=format:'%h' -1)" >> $GITHUB_OUTPUT
 
       - name: Upload artifact
         uses: actions/upload-artifact@master

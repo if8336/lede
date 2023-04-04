@@ -32,11 +32,9 @@ jobs:
       - name: Get version
         id: get_version
         run: |
-          echo "{VERSION}={$(date +%Y%m%d)-$(git log --pretty=format:'%h' -1)}" >> $GITHUB_OUTPUT
-          echo "VERSION2=$(date +%Y%m%d)-$(git log --pretty=format:'%h' -1)" >> $GITHUB_OUTPUT
+          echo "VERSION=$(date +%Y%m%d)-$(git log --pretty=format:'%h' -1)" >> $GITHUB_OUTPUT
 
       - name: aaa
         run: |
           echo  ${{ steps.get_version.outputs.VERSION }}
-          echo  ${{ steps.get_version.outputs.VERSION2 }}
 
