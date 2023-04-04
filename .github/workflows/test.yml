@@ -1,0 +1,42 @@
+#
+# This is free software, lisence use MIT.
+#
+# Copyright (C) 2019 P3TERX <https://p3terx.com>
+# Copyright (C) 2019 KFERMercer <KFER.Mercer@gmail.com>
+#
+# <https://github.com/KFERMercer/OpenWrt-CI>
+#
+
+name: run test case
+
+
+on:
+  watch:
+    types: started
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    #    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          ref: master
+
+      - name: Get version
+        id: get_version
+        run: |
+          echo "::set-output name=VERSION::$(date +%Y%m%d)-$(git log --pretty=format:'%h' -1)"
+          echo "{VERSION}={$(date +%Y%m%d)-$(git log --pretty=format:'%h' -1)}" >> $GITHUB_OUTPUT
+          echo "VERSION2=$(date +%Y%m%d)-$(git log --pretty=format:'%h' -1)" >> $GITHUB_OUTPUT
+
+      - name: aaa
+        run: |
+          echo  ${{ steps.get_version.outputs.VERSION }}
+          echo  ${{ steps.get_version.outputs.VERSION2 }}
+
