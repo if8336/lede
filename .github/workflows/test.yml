@@ -11,8 +11,9 @@ name: run test case
 
 
 on:
-  watch:
-    types: started
+  push:
+    branches:
+      - master
 
 jobs:
 
@@ -31,7 +32,6 @@ jobs:
       - name: Get version
         id: get_version
         run: |
-          echo "::set-output name=VERSION::$(date +%Y%m%d)-$(git log --pretty=format:'%h' -1)"
           echo "{VERSION}={$(date +%Y%m%d)-$(git log --pretty=format:'%h' -1)}" >> $GITHUB_OUTPUT
           echo "VERSION2=$(date +%Y%m%d)-$(git log --pretty=format:'%h' -1)" >> $GITHUB_OUTPUT
 
