@@ -101,6 +101,9 @@ jobs:
           CONFIG_LIBCURL_COOKIES=y
           CONFIG_LIBCURL_FILE=y
           CONFIG_LIBCURL_FTP=y
+          CONFIG_PACKAGE_nohup=y
+          # CONFIG_BUSYBOX_CONFIG_SYSLOGD=y
+          # CONFIG_PACKAGE_busybox=y
           CONFIG_LIBCURL_HTTP=y
           CONFIG_LIBCURL_MBEDTLS=y
           CONFIG_LIBCURL_NO_SMB="!"

@@ -68,6 +68,7 @@ echo "正在上传固件"
 scp -r ~/Downloads/update/${CURRENT_DATE}.sysupgrade.img.gz root@${ROUTER_IP}:/tmp/tmp/
 # 执行更新
 echo "正在执行更新,请耐心等待"
-ssh root@${ROUTER_IP} "sysupgrade  /tmp/tmp/${CURRENT_DATE}.sysupgrade.img.gz"
+#todo 测试nohup是否编译成功
+#ssh root@${ROUTER_IP} "nohup sysupgrade  /tmp/tmp/${CURRENT_DATE}.sysupgrade.img.gz &"
 
 
