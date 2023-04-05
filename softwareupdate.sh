@@ -12,7 +12,7 @@ fi
 
 
 # 更新软件包列表
-sleep 10
+# sleep 10
 # 当前软件版本
 cur_ver=$(opkg list | grep "luci-app-aliyundrive-webdav - ")
 
