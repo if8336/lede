@@ -2,6 +2,8 @@
 
 # 切换到工作目录
 cd ~/Downloads/update
+# 记录日志
+#exec &> >(tee -a "runner.log")
 
 #路由器地址
 ROUTER_IP="10.1.1.1"
@@ -53,6 +55,7 @@ if [ "$checksum" != "$orSum" ]; then
     exit 1
 fi
  echo "文件校验成功"
+ rm -rf ${CURRENT_DATE}.sha256sums
 
 #备份当前配置信息
 echo "正在备份当前配置信息"
@@ -68,7 +71,11 @@ echo "正在上传固件"
 scp -r ~/Downloads/update/${CURRENT_DATE}.sysupgrade.img.gz root@${ROUTER_IP}:/tmp/tmp/
 # 执行更新
 echo "正在执行更新,请耐心等待"
-#todo 测试nohup是否编译成功
-#ssh root@${ROUTER_IP} "nohup sysupgrade  /tmp/tmp/${CURRENT_DATE}.sysupgrade.img.gz &"
+
+ssh root@${ROUTER_IP} "sysupgrade  /tmp/tmp/${CURRENT_DATE}.sysupgrade.img.gz"
+
+echo "更新完成"
+# 关闭日志
+#exec >&-
 
 
