@@ -1,0 +1,63 @@
+#
+# This is free software, lisence use MIT.
+#
+# Copyright (C) 2019 P3TERX <https://p3terx.com>
+# Copyright (C) 2019 KFERMercer <KFER.Mercer@gmail.com>
+#
+# <https://github.com/KFERMercer/OpenWrt-CI>
+#
+
+name: run test case
+
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    #    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          ref: master
+
+      - name: Get version
+        id: get_version
+        run: |
+          echo "VERSION=$(git log --pretty=format:'%h' -1)" >> $GITHUB_OUTPUT
+          echo 1 > 1.txt
+          echo github.event.repository.owner.id
+          echo ${{github.event.repository.owner.id}}
+          echo  github.event_name 
+          echo ${{ github.event_name }}
+
+      - name: print dir
+        run: |
+          find . -type d -exec ls -d {} \;
+
+      - name: generate version
+        uses: actions/cache@v2
+        with:
+          path: .
+          key: ${{runner.os}}-node-${{steps.get_version.outputs.VERSION}}
+          archive_path: node_modules.tar.gz
+          compression_level: 9
+
+      - name: print dir
+        run: |
+          find . -type d -exec ls -d {} \;
+
+      - name: Check cache hit
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: |
+          echo "Cache miss"
+          cat 1.txt
+
