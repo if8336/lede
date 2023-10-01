@@ -200,17 +200,11 @@ jobs:
           # CONFIG_PACKAGE_luci-app-accesscontrol is not set
           # CONFIG_PACKAGE_luci-app-aria2=y
           # CONFIG_PACKAGE_luci-app-autoreboot is not set
-          CONFIG_PACKAGE_luci-app-diskman=y
           # 应用过滤插件，需要关闭ssr
           # CONFIG_PACKAGE_luci-app-oaf=y
           CONFIG_PACKAGE_luci-app-passwall=y
           CONFIG_PACKAGE_luci-app-mwan3=y
           CONFIG_PACKAGE_luci-app-syncdial=y
-          CONFIG_PACKAGE_luci-app-diskman_INCLUDE_btrfs_progs=y
-          CONFIG_PACKAGE_luci-app-diskman_INCLUDE_kmod_md_linear=y
-          CONFIG_PACKAGE_luci-app-diskman_INCLUDE_kmod_md_raid456=y
-          CONFIG_PACKAGE_luci-app-diskman_INCLUDE_lsblk=y
-          CONFIG_PACKAGE_luci-app-diskman_INCLUDE_mdadm=y
           # CONFIG_PACKAGE_luci-app-frpc=y
           # CONFIG_PACKAGE_luci-app-frps=y
           CONFIG_PACKAGE_luci-app-hd-idle=y
