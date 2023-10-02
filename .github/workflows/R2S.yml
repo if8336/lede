@@ -212,7 +212,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-minidlna=y
           # CONFIG_PACKAGE_luci-app-netdata=y
           # CONFIG_PACKAGE_luci-app-samba=y
-          # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_NaiveProxy=y
+          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_NaiveProxy=y
           # webdav默认版本过低，关闭
           # CONFIG_PACKAGE_luci-app-aliyundrive-webdav=y
           CONFIG_PACKAGE_luci-app-ttyd=y
