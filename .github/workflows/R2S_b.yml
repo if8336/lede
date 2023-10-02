@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: build artifact R2S
+name: build artifact R2S_beta
 
 on:
   push:
