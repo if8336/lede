@@ -321,7 +321,7 @@ jobs:
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
-          files: ./bin/targets/rockchip/armv8/*
+          files: ./bin/targets/*
           tag_name: ${{ steps.get_version.outputs.VERSION }}
           draft: false
           prerelease: false

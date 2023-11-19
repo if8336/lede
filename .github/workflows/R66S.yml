@@ -96,6 +96,7 @@ jobs:
            # 编译极路由3固件:
           cat >> .config <<EOF
           CONFIG_TARGET_rockchip=y
+          # CONFIG_VMDK_IMAGES is not set
           CONFIG_TARGET_rockchip_armv8=y
           CONFIG_TARGET_rockchip_armv8_DEVICE_fastrhino_r66s=y
           # CONFIG_ARIA2_BITTORRENT=y
@@ -321,7 +322,7 @@ jobs:
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
-          files: ./bin/targets/rockchip/armv8/*
+          files: ./bin/targets/*
           tag_name: ${{ steps.get_version.outputs.VERSION }}
           draft: false
           prerelease: false

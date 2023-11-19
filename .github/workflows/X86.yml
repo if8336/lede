@@ -94,7 +94,7 @@ jobs:
           #
 
            # 编译极路由3固件:
-          cat >> .config <<EOF
+          cat >> .config <<EOF          
           CONFIG_TARGET_x86=y
           CONFIG_TARGET_x86_64=y
           CONFIG_TARGET_x86_64_DEVICE_generic=y
@@ -112,6 +112,12 @@ jobs:
           CONFIG_LIBCURL_MBEDTLS=y
           CONFIG_LIBCURL_NO_SMB="!"
           CONFIG_LIBCURL_PROXY=y
+          # CONFIG_PACKAGE_automount is not set
+          # CONFIG_PACKAGE_luci-app-cifs-mount is not set
+          # CONFIG_PACKAGE_cifsmount is not set
+          # CONFIG_PACKAGE_ntfs3-mount is not set
+          # CONFIG_PACKAGE_cgroupfs-mount is not set
+          # CONFIG_PACKAGE_mount-utils is not set
           # CONFIG_PACKAGE_SAMBA_MAX_DEBUG_LEVEL=-1
           # CONFIG_PACKAGE_UnblockNeteaseMusic is not set
           # CONFIG_PACKAGE_UnblockNeteaseMusicGo is not set
@@ -321,7 +327,7 @@ jobs:
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
-          files: ./bin/targets/rockchip/armv8/*
+          files: ./bin/targets/*
           tag_name: ${{ steps.get_version.outputs.VERSION }}
           draft: false
           prerelease: false
