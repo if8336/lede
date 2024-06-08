@@ -1,0 +1,59 @@
+{
+  "_query": {
+    "name": "ubuntu"
+  },
+  "name": "ubuntu",
+  "AttachStdout": false,
+  "AttachStderr": false,
+  "ExposedPorts": {},
+  "Tty": true,
+  "Env": [
+    "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  ],
+  "Cmd": [
+    "/bin/bash"
+  ],
+  "Healthcheck": {},
+  "Image": "ubuntu:18.04",
+  "Volumes": null,
+  "Entrypoint": null,
+  "OnBuild": null,
+  "Labels": {
+    "org.opencontainers.image.ref.name": "ubuntu",
+    "org.opencontainers.image.version": "18.04"
+  },
+  "HostConfig": {
+    "PortBindings": {},
+    "RestartPolicy": {},
+    "LogConfig": {},
+    "Sysctls": {},
+    "Mounts": [
+      {
+        "Target": "/bb",
+        "Source": "/etc",
+        "ReadOnly": false,
+        "Type": "bind",
+        "Consistency": "default",
+        "Mode": "RW"
+      }
+    ],
+    "CapAdd": [
+      "AUDIT_WRITE",
+      "CHOWN",
+      "DAC_OVERRIDE",
+      "FOWNER",
+      "FSETID",
+      "KILL",
+      "MKNOD",
+      "NET_BIND_SERVICE",
+      "NET_RAW",
+      "SETUID",
+      "SETGID"
+    ],
+    "CapDrop": [],
+    "Links": []
+  },
+  "NetworkingConfig": {
+    "EndpointsConfig": {}
+  }
+}
