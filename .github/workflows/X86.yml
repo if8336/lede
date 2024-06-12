@@ -157,6 +157,7 @@ jobs:
           CONFIG_PACKAGE_kmod-crypto-cbc=y
           CONFIG_PACKAGE_kmod-crypto-deflate=y
           CONFIG_PACKAGE_kmod-crypto-des=y
+          CONFIG_DEFAULT_kmod-r8125=n
           CONFIG_PACKAGE_kmod-crypto-echainiv=y
           CONFIG_PACKAGE_kmod-crypto-hmac=y
           CONFIG_PACKAGE_kmod-crypto-md5=y
