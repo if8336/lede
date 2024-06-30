@@ -8,7 +8,7 @@ cd ~/Downloads/update
 #路由器地址
 ROUTER_IP="10.1.1.1"
 # 软件仓库地址
-REPO_URL="https://github.com/yjw8336/lede"
+REPO_URL="https://github.com/if8336/lede"
 # 当前日期
 CURRENT_DATE=$(date +%Y-%m%d%H%M%S)
 

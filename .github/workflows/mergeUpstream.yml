@@ -28,7 +28,7 @@ jobs:
 
       - name: Set git identity
         run: |
-          git config --global user.email "yjw8886@gmail.com"
+          git config --global user.email "if8886@gmail.com"
           git config --global user.name "robot"
           git config pull.rebase false
 
