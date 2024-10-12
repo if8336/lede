@@ -232,6 +232,7 @@ jobs:
           # 应用过滤插件，需要关闭ssr
           # CONFIG_PACKAGE_luci-app-oaf=y
           CONFIG_PACKAGE_luci-app-passwall=y
+          CONFIG_PACKAGE_luci-app-zerotier=y
           CONFIG_PACKAGE_luci-app-mwan3=y
           CONFIG_PACKAGE_luci-app-syncdial=y
           CONFIG_PACKAGE_luci-app-diskman_INCLUDE_btrfs_progs=y
