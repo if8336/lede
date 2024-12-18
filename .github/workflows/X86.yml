@@ -14,7 +14,7 @@ on:
     branches:
       - master
   schedule:
-      - cron: 0 21 * * 4
+    - cron: 0 21 * * 4
 #  watch:
 #    types: started
 
@@ -96,9 +96,10 @@ jobs:
            # 编译极路由3固件:
           cat >> .config <<EOF          
           CONFIG_TARGET_x86=y
-          CONFIG_TARGET_x86_64=y
-          CONFIG_TARGET_x86_64_DEVICE_generic=y
-          CONFIG_ISO_IMAGES=y
+          CONFIG_TARGET_x86_GENERIC=y
+          CONFIG_TARGET_IMAGES=y
+          CONFIG_TARGET_ROOTFS_SQUASHFS=y
+          CONFIG_TARGET_IMAGES_VMDK=y
           # CONFIG_ARIA2_BITTORRENT=y
           # CONFIG_ARIA2_NOXML=y
           # CONFIG_ARIA2_OPENSSL=y
@@ -113,6 +114,7 @@ jobs:
           CONFIG_LIBCURL_MBEDTLS=y
           CONFIG_LIBCURL_NO_SMB="!"
           CONFIG_LIBCURL_PROXY=y
+          CONFIG_VMDK_IMAGES=y
           # CONFIG_PACKAGE_automount is not set
           # CONFIG_PACKAGE_luci-app-cifs-mount is not set
           # CONFIG_PACKAGE_cifsmount is not set
