@@ -31,7 +31,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
         with:
-          ref: me
+          ref: master
 
       - name: Get version
         id: get_version
