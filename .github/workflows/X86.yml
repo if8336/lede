@@ -307,17 +307,21 @@ jobs:
       - name: Prepare artifact
         run: find ./bin/targets/ -type d -name "packages" | xargs rm -rf {}
 
+      - name: Debug Files
+        run: |
+          echo "Files in ./bin/targets/:"
+          ls -al ./bin/targets/
 
       - name: Upload artifact
         uses: actions/upload-artifact@master
         with:
           name: ${{ steps.get_version.outputs.VERSION }}
-          path: ./bin/targets/
+          path: ./bin/targets/**/*
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
-          files: ./bin/targets/*
+          files: ./bin/targets/**/*
           tag_name: ${{ steps.get_version.outputs.VERSION }}
           draft: false
           prerelease: false
