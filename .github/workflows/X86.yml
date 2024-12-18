@@ -318,19 +318,13 @@ jobs:
         with:
           name: ${{ steps.get_version.outputs.VERSION }}
           path: |
-            ./bin/targets/**/*.iso
-            ./bin/targets/**/*.img.gz
-            ./bin/targets/**/*.bin
-            ./bin/targets/**/*.vmdk
+            ./bin/targets/**/*
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ./bin/targets/**/*.iso
-            ./bin/targets/**/*.img.gz
-            ./bin/targets/**/*.bin
-            ./bin/targets/**/*.vmdk
+            ./bin/targets/**/*
           tag_name: ${{ steps.get_version.outputs.VERSION }}
           draft: false
           prerelease: false
