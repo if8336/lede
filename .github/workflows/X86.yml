@@ -88,9 +88,10 @@ jobs:
            # 编译极路由3固件:
           cat >> .config <<EOF          
           CONFIG_TARGET_x86=y
-          CONFIG_TARGET_x86_64=y
-          CONFIG_TARGET_x86_64_DEVICE_generic=y
-          CONFIG_ISO_IMAGES=y
+          CONFIG_TARGET_x86_GENERIC=y
+          CONFIG_TARGET_IMAGES=y
+          CONFIG_TARGET_ROOTFS_SQUASHFS=y
+          CONFIG_TARGET_IMAGES_VMDK=y
           # CONFIG_ARIA2_BITTORRENT=y
           # CONFIG_ARIA2_NOXML=y
           # CONFIG_ARIA2_OPENSSL=y
@@ -320,6 +321,7 @@ jobs:
             ./bin/targets/**/*.iso
             ./bin/targets/**/*.img.gz
             ./bin/targets/**/*.bin
+            ./bin/targets/**/*.vmdk
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
@@ -328,6 +330,7 @@ jobs:
             ./bin/targets/**/*.iso
             ./bin/targets/**/*.img.gz
             ./bin/targets/**/*.bin
+            ./bin/targets/**/*.vmdk
           tag_name: ${{ steps.get_version.outputs.VERSION }}
           draft: false
           prerelease: false
