@@ -316,12 +316,18 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: ${{ steps.get_version.outputs.VERSION }}
-          path: ./bin/targets/**/*.iso
+          path: |
+            ./bin/targets/**/*.iso
+            ./bin/targets/**/*.img.gz
+            ./bin/targets/**/*.bin
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
-          files: ./bin/targets/**/*.iso
+          files: |
+            ./bin/targets/**/*.iso
+            ./bin/targets/**/*.img.gz
+            ./bin/targets/**/*.bin
           tag_name: ${{ steps.get_version.outputs.VERSION }}
           draft: false
           prerelease: false
