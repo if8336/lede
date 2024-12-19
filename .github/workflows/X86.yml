@@ -88,10 +88,11 @@ jobs:
            # 编译极路由3固件:
           cat >> .config <<EOF          
           CONFIG_TARGET_x86=y
-          CONFIG_TARGET_x86_GENERIC=y
-          CONFIG_TARGET_IMAGES=y
+          CONFIG_TARGET_x86_64=y
+          CONFIG_TARGET_x86_64_DEVICE_generic=y
+          CONFIG_TARGET_IMAGES_GZIP=y
           CONFIG_TARGET_ROOTFS_SQUASHFS=y
-          CONFIG_TARGET_IMAGES_VMDK=y
+          CONFIG_VMDK_IMAGES=y
           # CONFIG_ARIA2_BITTORRENT=y
           # CONFIG_ARIA2_NOXML=y
           # CONFIG_ARIA2_OPENSSL=y
