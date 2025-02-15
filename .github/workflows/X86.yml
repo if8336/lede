@@ -208,6 +208,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-oaf=y
           CONFIG_PACKAGE_luci-app-passwall=y
           CONFIG_PACKAGE_luci-app-zerotier=y
+          CONFIG_PACKAGE_zerotier=y
           CONFIG_PACKAGE_luci-app-mwan3=y
           CONFIG_PACKAGE_luci-app-syncdial=y
           CONFIG_PACKAGE_luci-app-diskman_INCLUDE_btrfs_progs=y
@@ -230,7 +231,6 @@ jobs:
           # CONFIG_PACKAGE_luci-app-webadmin is not set
           # CONFIG_PACKAGE_luci-app-wol is not set
           # CONFIG_PACKAGE_luci-app-xlnetacc=y
-          # CONFIG_PACKAGE_luci-app-zerotier is not set
           # CONFIG_PACKAGE_luci-i18n-aria2-zh-cn=y
           # CONFIG_PACKAGE_luci-i18n-frpc-zh-cn=y
           # CONFIG_PACKAGE_luci-i18n-frps-zh-cn=y
@@ -275,7 +275,6 @@ jobs:
           CONFIG_PACKAGE_ttyd=y
           CONFIG_PACKAGE_uclibcxx=y
           # CONFIG_PACKAGE_wol is not set
-          # CONFIG_PACKAGE_zerotier is not set
           CONFIG_SQLITE3_DYNAMIC_EXTENSIONS=y
           CONFIG_SQLITE3_FTS3=y
           CONFIG_SQLITE3_FTS4=y
