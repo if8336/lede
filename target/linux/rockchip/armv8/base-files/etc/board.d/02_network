@@ -43,6 +43,7 @@ rockchip_setup_interfaces()
 	hinlink,opc-h28k|\
 	nlnet,xgp|\
 	mmbox,anas3035|\
+	nlnet,xiguapi-v3|\
 	radxa,e20c|\
 	radxa,e25|\
 	seewo,sv21|\
