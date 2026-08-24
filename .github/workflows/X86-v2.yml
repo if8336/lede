@@ -12,9 +12,17 @@ on:
       - cursor/x86-v2-slim-2fc1
   workflow_dispatch:
 
+concurrency:
+  group: x86-v2-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
   actions: write
+
+env:
+  CCACHE_DIR: ${{ github.workspace }}/.ccache
+  CCACHE_MAXSIZE: 2G
 
 jobs:
 
@@ -27,7 +35,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: master
+          # Use the triggering branch so feeds.conf / workflow fixes apply.
+          ref: ${{ github.ref }}
 
       - name: Get version
         id: get_version
@@ -45,7 +54,25 @@ jobs:
           sudo -E apt -y install ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache clang cmake cpio curl device-tree-compiler flex gawk gcc-multilib g++-multilib gettext genisoimage git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libfuse-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libpython3-dev libreadline-dev libssl-dev libtool llvm lrzsz msmtp ninja-build p7zip p7zip-full patch pkgconf python3 python3-pyelftools python3-setuptools qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
           sudo -E apt -y autoremove --purge
           sudo -E apt clean
+          ccache -M "$CCACHE_MAXSIZE" || true
           df -h
+
+      - name: Cache OpenWrt dl/
+        uses: actions/cache@v4
+        with:
+          path: dl
+          key: lede-dl-x86_64-${{ hashFiles('feeds.conf.default') }}
+          restore-keys: |
+            lede-dl-x86_64-
+
+      - name: Cache ccache
+        uses: actions/cache@v4
+        with:
+          path: .ccache
+          key: lede-ccache-x86_64-${{ hashFiles('feeds.conf.default', '.github/workflows/X86-v2.yml') }}-${{ github.sha }}
+          restore-keys: |
+            lede-ccache-x86_64-${{ hashFiles('feeds.conf.default', '.github/workflows/X86-v2.yml') }}-
+            lede-ccache-x86_64-
 
       - name: Update feeds
         run: |
@@ -61,12 +88,13 @@ jobs:
           # 目标：Passwall + ZeroTier + 默认 LAN IP
           #
           cat >> .config <<EOF
+          CONFIG_CCACHE=y
           CONFIG_TARGET_x86=y
           CONFIG_TARGET_x86_64=y
           CONFIG_TARGET_x86_64_DEVICE_generic=y
           CONFIG_TARGET_IMAGES_GZIP=y
           CONFIG_TARGET_ROOTFS_SQUASHFS=y
-          # CONFIG_VMDK_IMAGES is not set
+          CONFIG_VMDK_IMAGES=y
 
           # 基础工具
           CONFIG_PACKAGE_ca-bundle=y
@@ -113,6 +141,9 @@ jobs:
       - name: Compile firmware
         run: |
           make -j$(nproc) || make -j1 V=s
+          echo "======================="
+          echo "ccache stats:"
+          ccache -s || true
           echo "======================="
           echo "Space usage:"
           echo "======================="
