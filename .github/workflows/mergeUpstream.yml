@@ -1,0 +1,64 @@
+#
+# This is free software, lisence use MIT.
+# 22
+# Copyright (C) 2019 KFERMercer <KFER.Mercer@gmail.com>
+#
+# <https://github.com/KFERMercer/OpenWrt-CI>
+# 111j
+
+name: Merge-upstream
+
+on:
+  schedule:
+    - cron: 30 20 * * *
+
+jobs:
+  merge:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          ref: master
+          fetch-depth: 0
+          lfs: true
+
+      - name: Set git identity
+        run: |
+          git config --global user.email "yjw8886@gmail.com"
+          git config --global user.name "robot"
+          git config pull.rebase false
+
+      - name: Load upstream commits
+        run: |
+          # -X ours only resolves content conflicts; modify/delete still stops the merge.
+          # This fork deleted upstream's openwrt-ci.yml in favor of R2S/R66S/X86 workflows,
+          # while upstream keeps updating that file — that is the recurring DU conflict.
+          set +e
+          git pull https://github.com/coolsnowwolf/lede.git --no-edit --strategy-option ours
+          pull_status=$?
+          set -e
+          if [ "$pull_status" -ne 0 ]; then
+            # DU: deleted by us, modified by them -> keep our deletion
+            # UD: modified by us, deleted by them -> keep our file
+            git status --porcelain | while read -r status path; do
+              case "$status" in
+                DU) git rm -f -- "$path" ;;
+                UD) git add -- "$path" ;;
+              esac
+            done
+            if ! git diff --quiet --diff-filter=U; then
+              echo "Unresolved conflicts remain:"
+              git diff --name-only --diff-filter=U
+              exit 1
+            fi
+            git commit --no-edit -m "Merge https://github.com/coolsnowwolf/lede"
+          fi
+
+      - name: Push Commits
+        env:
+          DOWNSTREAM_BRANCH: master
+        run: git push origin $DOWNSTREAM_BRANCH
