@@ -596,6 +596,7 @@ ifdef KernelPackage/crypto-lib-chacha20/$(ARCH)
   KernelPackage/crypto-lib-chacha20/$(CRYPTO_TARGET)=\
 	  $(KernelPackage/crypto-lib-chacha20/$(ARCH))
 endif
+endif
 
 $(eval $(call KernelPackage,crypto-lib-chacha20))
 
@@ -647,6 +648,7 @@ ifdef KernelPackage/crypto-lib-curve25519/$(ARCH)
   KernelPackage/crypto-lib-curve25519/$(CRYPTO_TARGET)=\
 	  $(KernelPackage/crypto-lib-curve25519/$(ARCH))
 endif
+endif
 
 $(eval $(call KernelPackage,crypto-lib-curve25519))
 
@@ -695,6 +697,7 @@ endif
 ifdef KernelPackage/crypto-lib-poly1305/$(ARCH)
   KernelPackage/crypto-lib-poly1305/$(CRYPTO_TARGET)=\
 	  $(KernelPackage/crypto-lib-poly1305/$(ARCH))
+endif
 endif
 
 $(eval $(call KernelPackage,crypto-lib-poly1305))
