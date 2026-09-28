@@ -5,10 +5,10 @@
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
-PKG_VERSION:=2025.10
+PKG_VERSION:=2026.07
 PKG_RELEASE:=1
 
-PKG_HASH:=b4f032848e56cc8f213ad59f9132c084dbbb632bc29176d024e58220e0efdf4a
+PKG_HASH:=78e8bfc382fe388f9b55aa1daf8c563522a037779b5d4c349d1415e381f1243e
 
 PKG_MAINTAINER:=Tobias Maedel <openwrt@tbspace.de>
 
@@ -19,6 +19,23 @@ define U-Boot/Default
   BUILD_TARGET:=rockchip
   UENV:=default
   HIDDEN:=1
+endef
+
+
+# RK3308 boards
+
+define U-Boot/rk3308/Default
+  BUILD_SUBTARGET:=armv8
+  DEPENDS:=+PACKAGE_u-boot-$(1):rkbin-rk3308
+  ATF:=rk3308_bl31_v2.27.elf
+  TPL:=rk3308_ddr_589MHz_uart2_m1_v2.10.bin
+endef
+
+define U-Boot/rock-pi-s-rk3308
+  $(U-Boot/rk3308/Default)
+  NAME:=ROCK Pi S
+  BUILD_DEVICES:= \
+    radxa_rock-pi-s
 endef
 
 
@@ -109,6 +126,9 @@ define U-Boot/king3399-rk3399
   NAME:=Rongpin King3399
   BUILD_DEVICES:= \
     rongpin_king3399
+  DEPENDS:=+PACKAGE_u-boot-$(1):rkbin-rk3399
+  ATF:=rk3399_bl31_v1.36.elf
+  USE_RKBIN:=1
 endef
 
 define U-Boot/mpc1903-rk3399
@@ -129,7 +149,8 @@ define U-Boot/nanopi-r4s-rk3399
   $(U-Boot/rk3399/Default)
   NAME:=NanoPi R4S
   BUILD_DEVICES:= \
-    friendlyarm_nanopi-r4s
+    friendlyarm_nanopi-r4s \
+    friendlyarm_nanopi-r4s-enterprise
   DEPENDS:=+PACKAGE_u-boot-$(1):rkbin-rk3399
   ATF:=rk3399_bl31_v1.36.elf
   USE_RKBIN:=1
@@ -143,6 +164,20 @@ define U-Boot/nanopi-r4se-rk3399
   DEPENDS:=+PACKAGE_u-boot-$(1):rkbin-rk3399
   ATF:=rk3399_bl31_v1.36.elf
   USE_RKBIN:=1
+endef
+
+define U-Boot/rock-4se-rk3399
+  $(U-Boot/rk3399/Default)
+  NAME:=ROCK 4SE
+  BUILD_DEVICES:= \
+    radxa_rock-4se
+endef
+
+define U-Boot/rock-4c-plus-rk3399
+  $(U-Boot/rk3399/Default)
+  NAME:=ROCK 4C+
+  BUILD_DEVICES:= \
+    radxa_rock-4c-plus
 endef
 
 define U-Boot/rock-pi-4-rk3399
@@ -203,6 +238,14 @@ define U-Boot/generic-rk3528
     widora_mangopi-m28c \
     widora_mangopi-m28k \
     widora_mangopi-m28k-pro
+endef
+
+define U-Boot/nanopi-zero2-rk3528
+  $(U-Boot/rk3528/Default)
+  NAME:=NanoPi Zero2
+  BUILD_DEVICES:= \
+    friendlyarm_nanopi-r28s \
+    friendlyarm_nanopi-zero2
 endef
 
 define U-Boot/radxa-e20c-rk3528
@@ -283,6 +326,27 @@ define U-Boot/fastrhino-r68s-rk3568
      fastrhino_r68s
 endef
 
+define U-Boot/easepi-r1-rk3568
+  $(U-Boot/rk3568/Default)
+  NAME:=LinkEase EasePi R1
+  BUILD_DEVICES:= \
+    linkease_easepi-r1
+endef
+
+define U-Boot/hinlink-h66k-rk3568
+  $(U-Boot/rk3568/Default)
+  NAME:=HINLINK H66K
+  BUILD_DEVICES:= \
+    hinlink_opc-h66k
+endef
+
+define U-Boot/hinlink-h68k-rk3568
+  $(U-Boot/rk3568/Default)
+  NAME:=HINLINK H68K
+  BUILD_DEVICES:= \
+    hinlink_opc-h68k
+endef
+
 define U-Boot/generic-rk3568
   $(U-Boot/rk3568/Default)
   NAME:=GENERIC RK3568
@@ -291,8 +355,6 @@ define U-Boot/generic-rk3568
     armsom_sige3 \
     ezpro_mrkaio-m68s \
     ezpro_mrkaio-m68s-plus \
-    hinlink_opc-h66k \
-    hinlink_opc-h68k \
     hinlink_opc-h69k \
     lyt_t68m \
     nlnet_xiguapi-v3 \
@@ -381,6 +443,13 @@ define U-Boot/generic-rk3576
     friendlyarm_nanopi-r76s
 endef
 
+define U-Boot/rock-4d-rk3576
+  $(U-Boot/rk3576/Default)
+  NAME:=ROCK 4D
+  BUILD_DEVICES:= \
+    radxa_rock-4d
+endef
+
 define U-Boot/sige5-rk3576
   $(U-Boot/rk3576/Default)
   NAME:=Sige5
@@ -402,6 +471,7 @@ define U-Boot/generic-rk3588
   $(U-Boot/rk3588/Default)
   NAME:=Generic RK3588
   BUILD_DEVICES:= \
+    bdy_g98 \
     radxa_e52c \
     radxa_e54c \
     seewo_srcm3588-io \
@@ -435,7 +505,8 @@ define U-Boot/sige7-rk3588
   $(U-Boot/rk3588/Default)
   NAME:=Sige7
   BUILD_DEVICES:= \
-    armsom_sige7
+    armsom_sige7 \
+    armsom_w3
 endef
 
 # RK3588S boards
@@ -476,13 +547,18 @@ define U-Boot/rock-5c-rk3588s
 endef
 
 UBOOT_TARGETS := \
+  rock-pi-s-rk3308 \
   generic-rk3528 \
+  nanopi-zero2-rk3528 \
   radxa-e20c-rk3528 \
   nanopi-r3s-rk3566 \
   panther-x2-rk3566 \
   radxa-zero-3-rk3566 \
   rock-3c-rk3566 \
   bpi-r2-pro-rk3568 \
+  easepi-r1-rk3568 \
+  hinlink-h66k-rk3568 \
+  hinlink-h68k-rk3568 \
   generic-rk3568 \
   fastrhino-r66s-rk3568 \
   fastrhino-r68s-rk3568 \
@@ -496,6 +572,7 @@ UBOOT_TARGETS := \
   rock-3b-rk3568 \
   station-p2-rk3568 \
   generic-rk3576 \
+  rock-4d-rk3576 \
   sige5-rk3576 \
   generic-rk3588 \
   nanopc-t6-rk3588 \
@@ -515,7 +592,9 @@ UBOOT_TARGETS := \
   nanopc-t4-rk3399 \
   nanopi-r4s-rk3399 \
   nanopi-r4se-rk3399 \
+  rock-4c-plus-rk3399 \
   rock-pi-4-rk3399 \
+  rock-4se-rk3399 \
   rockpro64-rk3399 \
   sv901-eaio-rk3399 \
   guangmiao-g4c-rk3399 \
@@ -529,23 +608,19 @@ UBOOT_TARGETS := \
 
 UBOOT_CONFIGURE_VARS += USE_PRIVATE_LIBGCC=yes
 
+UBOOT_CUSTOMIZE_CONFIG := \
+	--disable TOOLS_MKEFICAPSULE \
+	--set-str MKIMAGE_DTC_PATH $(PKG_BUILD_DIR)/scripts/dtc/dtc
+
 UBOOT_MAKE_FLAGS += \
   BL31=$(STAGING_DIR_IMAGE)/$(ATF) \
   PATH=$(STAGING_DIR_HOST)/bin:$(PATH) \
   $(if $(TPL),ROCKCHIP_TPL=$(STAGING_DIR_IMAGE)/$(TPL))
 
-define Build/Configure
-	$(call Build/Configure/U-Boot)
-
-	$(SED) 's#CONFIG_MKIMAGE_DTC_PATH=.*#CONFIG_MKIMAGE_DTC_PATH="$(PKG_BUILD_DIR)/scripts/dtc/dtc"#g' $(PKG_BUILD_DIR)/.config
-	echo '# CONFIG_TOOLS_MKEFICAPSULE is not set' >> $(PKG_BUILD_DIR)/.config
-	echo 'CONFIG_IDENT_STRING=" OpenWrt"' >> $(PKG_BUILD_DIR)/.config
-endef
-
 define Build/InstallDev
 	$(INSTALL_DIR) $(STAGING_DIR_IMAGE)
 ifneq ($(USE_RKBIN),)
-	$(STAGING_DIR_IMAGE)/loaderimage --pack --uboot $(PKG_BUILD_DIR)/u-boot-dtb.bin $(PKG_BUILD_DIR)/uboot.img 0x200000
+	$(STAGING_DIR_IMAGE)/loaderimage --pack --uboot $(PKG_BUILD_DIR)/u-boot-dtb.bin $(PKG_BUILD_DIR)/uboot.img 0x800000
 	$(CP) $(PKG_BUILD_DIR)/uboot.img $(STAGING_DIR_IMAGE)/$(BUILD_VARIANT)-uboot.img
 else
 	$(CP) $(PKG_BUILD_DIR)/idbloader.img $(STAGING_DIR_IMAGE)/$(BUILD_VARIANT)-idbloader.img
