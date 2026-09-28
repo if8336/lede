@@ -10,6 +10,12 @@ on:
     branches:
       - master
   workflow_dispatch:
+    inputs:
+      debug_tmate:
+        description: "暂停构建并开放临时 SSH，用于检查 make defconfig 后的配置"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -142,6 +148,10 @@ jobs:
           #
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
+
+      - name: Open temporary SSH debug session
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_tmate }}
+        uses: mxschmitt/action-tmate@v3
 
       - name: Verify bridge proxy configuration
         run: |
