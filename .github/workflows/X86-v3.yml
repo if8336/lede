@@ -149,9 +149,35 @@ jobs:
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
 
+      - name: Save configuration before verification
+        run: |
+          mkdir -p build-config
+          cp .config build-config/config.after-defconfig
+          ./scripts/diffconfig.sh > build-config/config.after-defconfig.diff
+
+      - name: Upload configuration before verification
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.get_version.outputs.VERSION }}-before-verification
+          path: |
+            build-config/config.after-defconfig
+            build-config/config.after-defconfig.diff
+
+      - name: Install tmate from Ubuntu packages
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_tmate }}
+        run: |
+          sudo apt-get install -y tmate
+          command -v tmate
+          tmate -V
+        timeout-minutes: 5
+
       - name: Open temporary SSH debug session
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_tmate }}
         uses: mxschmitt/action-tmate@v3
+        with:
+          install-dependencies: false
+          limit-access-to-actor: true
+        timeout-minutes: 20
 
       - name: Verify bridge proxy configuration
         run: |

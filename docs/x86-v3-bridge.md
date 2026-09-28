@@ -29,3 +29,9 @@
 先用一台下游电脑测试：从主路由获取地址、默认网关仍为主路由、直连和代理出口符合策略、DNS 分流和 UDP 正常；再检查 IPv6 策略、规则计数、Passwall 重启、防火墙重载与系统重启后的行为。只有实际经过业务网桥的流量受影响。
 
 GitHub Actions 编译成功只确认构建，不能替代三网口设备上的实机验证。普通网卡断电不具备自动物理旁路能力。
+
+## 检查 `make defconfig` 的结果
+
+v3 在配置校验之前上传 `${VERSION}-before-verification` artifact，包含 `config.after-defconfig` 和 `config.after-defconfig.diff`。即使后续校验失败，也可下载此 artifact 查找 `CONFIG_PACKAGE_kmod-ipt-nat` 等选项的实际值。
+
+手动运行并勾选 `debug_tmate` 时，v3 先从 Ubuntu 软件源安装 tmate，再进入 SSH 调试步骤；连接会话最长等待 20 分钟。调试会话只允许触发者 GitHub 账号中登记的 SSH 公钥连接。完成检查后，可在会话中执行 `touch continue` 继续工作流。
