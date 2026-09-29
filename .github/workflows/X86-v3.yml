@@ -129,6 +129,10 @@ jobs:
           CONFIG_PACKAGE_kmod-ebtables-ipv4=y
           CONFIG_PACKAGE_kmod-ebtables-ipv6=y
 
+          # 在 iptables 打标之后选择性本机投递；不切换 PassWall 的规则后端
+          CONFIG_PACKAGE_nftables-nojson=y
+          CONFIG_PACKAGE_kmod-nft-bridge=y
+
           # 初期验证透明代理时不使用 TurboACC 自动配置加速
           # CONFIG_PACKAGE_luci-app-turboacc is not set
 
@@ -193,6 +197,8 @@ jobs:
             PACKAGE_kmod-ebtables \
             PACKAGE_kmod-ebtables-ipv4 \
             PACKAGE_kmod-ebtables-ipv6 \
+            PACKAGE_nftables-nojson \
+            PACKAGE_kmod-nft-bridge \
             PACKAGE_ipset \
             PACKAGE_dnsmasq-full \
             PACKAGE_dnsmasq_full_ipset; do
