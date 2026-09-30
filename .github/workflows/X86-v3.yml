@@ -268,10 +268,12 @@ jobs:
       - name: Compile firmware
         run: |
           make -j$(nproc) || make -j1 V=s
-          find ./bin/targets/ -type f -name 'combined*.vmdk' -print -quit | grep -q . || {
-            echo '::error::VMDK image was not generated'
-            exit 1
-          }
+          for pattern in '*.img.gz' '*.iso' '*.vmdk' '*-combined*.img.gz'; do
+            find ./bin/targets/ -type f -name "$pattern" -print -quit | grep -q . || {
+              echo "::error::No firmware output matches $pattern"
+              exit 1
+            }
+          done
           echo "======================="
           echo "Space usage:"
           echo "======================="
